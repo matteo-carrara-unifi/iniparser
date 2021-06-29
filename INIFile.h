@@ -20,6 +20,7 @@ public:
 
 private:
     bool is_open = false;
+    vector<string
 };
 
 #endif //INIPARSER_INIFILE_H

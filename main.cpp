@@ -11,6 +11,5 @@ using namespace std;
 int main() {
     INIFile conf;
     conf.open("../sample.ini");
-    cout << "hello world" << endl;
     return 0;
 }

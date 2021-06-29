@@ -35,97 +35,30 @@ INIFile::INIFile() {
 void INIFile::open(const string filename) {
     ifstream fs(filename);
 
-
     if(fs.is_open()) {
-        vector<string> sections;
-
+        is_open = true;
         string line;
         while(getline(fs, line)) {
+            trim(line);
+            if(line.length() == 0)
+                continue;
+
             cout << line << endl;
-
-            /*bool line_comment = false;
-            bool line_section = false;
-            bool line_key = false;
-
-            string section_name;
-
-
-            bool leading_space = true;
-            int section_name_starts = 0, section_name_ends = 0;
-
-            int key_starts = 0;
-            string key_name = "";
-            int key_trailing_spaces = 0;
-
-
-            // start character iteration
-            for(int i = 0; i < line.length(); i++) {
-
-
-               if((line[i] == ' ') && leading_space) continue;
-               else {
-                   if (leading_space) { // first non-space char
-                       leading_space = false;
-
-                       if (line[i] == ';') { // line is a comment
-                           line_comment = true;
-                           cout << "comment" << endl;
-                           break;  // not useful for our purpose
-                       }
-
-                       else if (line[i] == '[') { // line is a section
-                           line_section = true;
-                           section_name_starts = i+1;
-                           cout << "section" << endl;
-                           continue;
-                       }
-
-                       else {
-                           // after some spaces we found a character
-                           // so this is a key
-                           line_key = true;
-                           key_starts=i;
-                           cout << "key" << endl;
-                           continue;
-                       }
-                   } // we are after leading space
-
-                   if(line_key) {
-                       if(line[i] == ' ' && key_name == "") {
-                           key_trailing_spaces++;
-                           if(i == (line.length()-1)) {
-                               cout << "Missing key value";
-                           }
-                       }
-                       else if (line[i] == '=' && key_name == "") {
-                           key_name = line.substr(key_starts, i-key_trailing_spaces-key_starts);
-                           cout << "KEY NAME =" << key_name << endl;
-                       }
-
-
-                   }
-
-                   if(line_section) {
-                       if(section_name_ends != 0)
-                           cout << "Error: found charachters after the end of the section " << endl;
-                       else if(line[i] == ']') {
-                               section_name_ends = i-1;
-                               cout << "SECTION NAME IS = " << line.substr(section_name_starts, i-section_name_starts) << endl;
-                       }
-
-
-                   }
-
-
-
-               }*/
+            switch(line[0]) {
+                case ';':
+                    cout << "commento" << endl;
+                    break;
+                case '[':
+                    cout << "sezione" << endl;
+                    break;
+                default:
+                    cout << "valore" << endl;
+                    break;
             }
-            // end of char iteration
-            is_open = true;
-        }
 
-        fs.close();
-    }
+            }
+            fs.close();
+        }
     else
         cerr << "Cannot open file" << endl;
     // FIXME eccezione
