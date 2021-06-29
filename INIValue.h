@@ -7,7 +7,11 @@
 
 
 class INIValue {
+public:
+    INIValue();
 
+    void getKey();
+    void getValue();
 };
 
 

@@ -7,6 +7,12 @@
 
 
 class INISection {
+public:
+    INISection();
+
+    void getValues();
+    void addValue();
+    void removeValue();
 
 };
 
