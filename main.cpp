@@ -3,13 +3,33 @@
 //
 
 #include <iostream>
-#include "INIFile.h"
+#include "INIParser.h"
 
 
 using namespace std;
 
 int main() {
-    INIFile conf;
-    conf.open("../sample.ini");
+    INIParser ini;
+    ini.open("../sample.ini");
+    for(auto &sec: ini.getSections())
+        cout << "MAIN: got section " << sec->getName() << endl;
+    ini.close();
+
+    // ini.open()
+    // ini.isOpen()
+    // ini.close()
+
+    // ini.getSections()
+    // ini.addSection()
+    // ini.removeSection()
+
+    // section.getKeys()
+    // section.removeKey()
+    // section.addKey()
+
+    // key.getValue()
+
+
+
     return 0;
 }
