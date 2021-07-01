@@ -15,16 +15,20 @@ public:
     INIFile(const string filename);
     ~INIFile();
 
-    // TODO Operator overloading
-    // TODO custom classes
-    const vector<raw_section*>&  getSections() const {return w->getRawSections();};
+    const vector<INISection*>& getSections() const {
+        return sections;
+    }
+
     void addSection();
     void removeSection();
 
-    bool isOpen() const {return w->isOpen();};
+    bool isOpen() const {
+        return w->isOpen();
+    }
 
 private:
     INIWriter *w;
+    vector<INISection*> sections;
 };
 
 #endif //INIPARSER_INIFILE_H

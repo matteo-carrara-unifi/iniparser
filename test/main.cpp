@@ -17,11 +17,11 @@ int main() {
         cout << "File read correctly\n";
 
     for(auto &s: myfile.getSections()) {
-        cout << "GOT section " << s->first << endl;
-        for(auto &m: *s->second) {
-            cout << "RAW KEY: " << m->first << "=" << m->second << endl;
+        cout << "Section name is " << s->getName() << endl;
+        for(auto &p: s->getProp()) {
+            cout << "Property name: " << p->getName() << endl << "Property value: " << p->getValue() << endl << endl;
         }
-        }
+    }
 
     return 0;
 }

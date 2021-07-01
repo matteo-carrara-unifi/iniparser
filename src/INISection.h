@@ -10,27 +10,35 @@
 #include <vector>
 #include <utility>
 
+#include "INIWriter.h"
+#include "INIProp.h"
 
 using namespace std;
 
+
 class INISection {
 public:
-    // TODO Destroy members
-    INISection(const string name, vector<pair<string, string>*>* members): __name(name), __members(members) {
-        cout << "NEW SECTION ADDED: " << name << endl;
-        for(auto &m: *members) {
-            cout << "MEMBER: " << m->first << " >>> " << m->second << endl;
+    INISection(INIWriter *_w, raw_section *_sec): w(_w), sec(_sec) {
+        for(auto &p: *sec->second) {
+            properties.push_back(new INIProp(w, p));
         }
     }
 
-    const string &getName() const {return __name;}
-    const vector<pair<string, string>*>*& getMembers() const {return (const vector<pair<std::string, std::string> *> *&) __members;}
+    const string getName() const {
+        return sec->first;
+    }
+
+    const vector<INIProp*> getProp() const {
+        return properties;
+    }
+
     void addValue();
     void removeValue();
 
 private:
-    const string __name;
-    vector<pair<string, string>*>* __members;
+    INIWriter *w;
+    raw_section *sec;
+    vector<INIProp*> properties;
 };
 
 
