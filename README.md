@@ -1,8 +1,14 @@
 # iniparser
 C++ library to work with INI files
 
+# Project status
+At this moment, INI file reading seems to work fine but
+file writing has not be implemented. Unit testing needs also
+to be added.
+
 # Usage
-This is a small concept of what you can do with this library:
+This is a small concept of what should be possible to do
+with this library when the project will be completed:
 ```c++
 #include <INIParser>
 
@@ -28,12 +34,12 @@ myfile["section"]["property"].getValue();
 myfile["section"]["property"] = "new custom value";
 myfile["section"]["property"].delProp();
 ```
-For more detailed information, please see the documentation
-generated with *Doxygen*.
 
-# Features
+# Features 
+(Some are *still to be implemented*)
+
 **INI file management**
-* Open for reading (live file updates are not supported)
+* Open for reading (no live updates, file loaded in memory)
 * File lock
 * Writes in-place at every change
 * No commit required
@@ -47,9 +53,9 @@ generated with *Doxygen*.
 
 **Keys**
 * Get all keys from a section
-* Remove a raw_key
-* Add a new raw_key
+* Remove a key
+* Add a new key
 
 # Updates
 Follow this project on [github](https://github.com/matteo-carrara-unifi/iniparser)
-or write an email to [matteo.carrara@stud.unifi.it](matteo.carrara@stud.unifi.it).
+or email me at [matteo.carrara@stud.unifi.it](matteo.carrara@stud.unifi.it).
