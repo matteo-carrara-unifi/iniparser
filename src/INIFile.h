@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "INIWriter.h"
 #include "INISection.h"
 
 using namespace std;
@@ -11,22 +12,19 @@ using namespace std;
 
 class INIFile {
 public:
-    INIFile(); // TODO open file in constructor
+    INIFile(const string filename);
     ~INIFile();
 
-    void open(const string filename); // TODO exception
-    void close(); // TODO private
-
     // TODO Operator overloading
-    const vector<INISection*>& getSections() const {return sections;}
+    // TODO custom classes
+    const vector<raw_section*>&  getSections() const {return w->getRawSections();};
     void addSection();
     void removeSection();
 
-    bool isOpen() {return is_open;}
+    bool isOpen() const {return w->isOpen();};
 
 private:
-    bool is_open = false;
-    vector<INISection*> sections;
+    INIWriter *w;
 };
 
 #endif //INIPARSER_INIFILE_H

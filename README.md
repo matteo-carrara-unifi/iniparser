@@ -47,8 +47,8 @@ generated with *Doxygen*.
 
 **Keys**
 * Get all keys from a section
-* Remove a key
-* Add a new key
+* Remove a raw_key
+* Add a new raw_key
 
 # Updates
 Follow this project on [github](https://github.com/matteo-carrara-unifi/iniparser)
