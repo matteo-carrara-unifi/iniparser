@@ -1,4 +1,4 @@
-#include "INIParser.h"
+#include "INIFile.h"
 
 #include <iostream>
 #include <string>
@@ -29,11 +29,11 @@ static inline void trim(std::string &s) {
 }
 
 
-INIParser::INIParser() {
+INIFile::INIFile() {
 }
 
 
-void INIParser::open(const string filename) {
+void INIFile::open(const string filename) {
     if(is_open == true)
         close();
 
@@ -126,7 +126,7 @@ void INIParser::open(const string filename) {
 
 }
 
-void INIParser::close() {
+void INIFile::close() {
     if(is_open) {
         is_open = false;
         cout << "Vector size is" << sections.size() << endl;
@@ -139,15 +139,15 @@ void INIParser::close() {
 
 }
 
-void INIParser::addSection() {
+void INIFile::addSection() {
 
 }
 
-void INIParser::removeSection() {
+void INIFile::removeSection() {
 
 }
 
-INIParser::~INIParser() {
+INIFile::~INIFile() {
     close();
 
 }

@@ -1,5 +1,5 @@
-#ifndef INIPARSER_INIPARSER_H
-#define INIPARSER_INIPARSER_H
+#ifndef INIPARSER_INIFILE_H
+#define INIPARSER_INIFILE_H
 
 #include <string>
 #include <vector>
@@ -8,14 +8,16 @@
 
 using namespace std;
 
-class INIParser {
+
+class INIFile {
 public:
-    INIParser();
-    ~INIParser();
+    INIFile(); // TODO open file in constructor
+    ~INIFile();
 
-    void open(const string filename);
-    void close();
+    void open(const string filename); // TODO exception
+    void close(); // TODO private
 
+    // TODO Operator overloading
     const vector<INISection*>& getSections() const {return sections;}
     void addSection();
     void removeSection();
@@ -27,4 +29,4 @@ private:
     vector<INISection*> sections;
 };
 
-#endif //INIPARSER_INIPARSER_H
+#endif //INIPARSER_INIFILE_H
