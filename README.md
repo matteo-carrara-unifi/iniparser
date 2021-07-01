@@ -36,7 +36,7 @@ myfile["section"]["property"].delProp();
 ```
 
 # Features 
-(Some are *still to be implemented*)
+(This is a list of wanted features, some are *still to be implemented*)
 
 **INI file management**
 * Open for reading (no live updates, file loaded in memory)
