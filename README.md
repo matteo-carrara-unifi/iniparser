@@ -2,9 +2,8 @@
 C++ library to work with INI files
 
 # Project status
-At this moment, INI file reading seems to work fine but
-file writing has not be implemented. Unit testing needs also
-to be added.
+At this moment, high-level interface for reading INI files has been implemented 
+but writing has not. Unit testing also needs to be added.
 
 # Usage
 This is a small concept of what should be possible to do
@@ -42,11 +41,11 @@ myfile["section"]["property"].delProp();
 * Open for reading (no live updates, file loaded in memory)
 * File lock
 * Writes in-place at every change
-* No commit required
+* No commit is required
 * Retains original formatting
 
 **Sections**
-* Global section is not supported at the moment
+* Global section is not supported
 * Get a list of all sections
 * Delete a section
 * Add a new section
