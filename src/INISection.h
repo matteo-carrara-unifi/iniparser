@@ -16,7 +16,7 @@ using namespace std;
 class INISection {
 public:
     // TODO Destroy members
-    INISection(const string name, vector<pair<string, string>*>* members): __name(name) {
+    INISection(const string name, vector<pair<string, string>*>* members): __name(name), __members(members) {
         cout << "NEW SECTION ADDED: " << name << endl;
         for(auto &m: *members) {
             cout << "MEMBER: " << m->first << " >>> " << m->second << endl;
@@ -24,12 +24,13 @@ public:
     }
 
     const string &getName() const {return __name;}
-    void getMembers();
+    const vector<pair<string, string>*>*& getMembers() const {return (const vector<pair<std::string, std::string> *> *&) __members;}
     void addValue();
     void removeValue();
 
 private:
     const string __name;
+    vector<pair<string, string>*>* __members;
 };
 
 

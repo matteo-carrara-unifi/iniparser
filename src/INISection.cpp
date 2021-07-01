@@ -9,10 +9,6 @@
 using namespace std;
 
 
-void INISection::getMembers() {
-
-}
-
 void INISection::addValue() {
 
 }

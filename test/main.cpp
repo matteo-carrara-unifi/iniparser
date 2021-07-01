@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "INIParser.h"
+#include "../src/INIParser.h"
 
 
 using namespace std;
@@ -11,8 +11,14 @@ using namespace std;
 int main() {
     INIParser ini;
     ini.open("../sample.ini");
-    for(auto &sec: ini.getSections())
+    for(auto &sec: ini.getSections()) {
         cout << "MAIN: got section " << sec->getName() << endl;
+        for(auto &item: *sec->getMembers()) {
+            cout << "MAIN: got member with key = " << item->first << " and value = " << item->second << endl;
+        }
+    }
+
+
     ini.close();
 
     // ini.open()
