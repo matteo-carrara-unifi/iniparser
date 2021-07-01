@@ -54,7 +54,6 @@ INIWriter::INIWriter(const string filename) {
                         // the ']' symbol should be only at the end of the line
                         // in order to be a valid section
                     } else {
-                        section_name = line.substr(1, line.length() - 2); // saving this for later
                         // good section found
                         if (inside_section == false && tmpkeys->size() != 0) {
                             // FIXME temp solution
@@ -75,6 +74,7 @@ INIWriter::INIWriter(const string filename) {
                             sections.push_back(s);
                             tmpkeys = new raw_key_group; // FIXME possible memory leak at the end
                         }
+                        section_name = line.substr(1, line.length() - 2); // saving this for later
                     }
                     break;
 
