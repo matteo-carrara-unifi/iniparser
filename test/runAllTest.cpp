@@ -1,31 +1,8 @@
-//
-// Created by Matteo Carrara on 29/06/21.
-//
+/* Copyright 2021 Matteo Carrara <matteo.carrara@stud.unifi.it> */
 
-#include <iostream>
-#include "../src/INIFile.h"
+#include "gtest/gtest.h"
 
-using namespace std;
-
-
-int main() {
-    INIFile myfile("../test/sample.ini");
-
-    if(!myfile.isOpen())
-        cout << "Error opening file\n";
-    else
-        cout << "File read correctly\n";
-
-    for(auto &s: myfile.getSections()) {
-        cout << "Section name is " << s.getName() << endl;
-        for(auto &p: s.getProp()) {
-            cout << "Property name: " << p.getName() << endl << "Property value: " << p.getValue() << endl << endl;
-        }
-    }
-
-    myfile.addSection("NEW SECTION 123").addKey("random key", "lulz value");
-    myfile["database"].addKey("New database key", "New database data");
-
-
-    return 0;
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

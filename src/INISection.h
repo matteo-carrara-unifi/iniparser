@@ -4,7 +4,6 @@
 #define INIPARSER_INISECTION_H
 
 #include <string>
-#include <iostream>
 #include <vector>
 #include <utility>
 

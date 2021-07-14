@@ -106,7 +106,6 @@ bool INIFile::removeSection(const string name) {
 
 
 bool INIFile::hasChanged() {
-    cout << "Has changed" << has_changed << endl;
     if(has_changed)
         return true;
 
@@ -126,7 +125,6 @@ bool INIFile::writeChanges() {
 
     std::ofstream ofs;
     ofs.open(filename, std::ofstream::out | std::ofstream::trunc);
-    cout << "Opening file for write" << endl;
     for(auto &s: sections) {
         if(!s.isGlobal()) {
             ofs << "[" << s.getName() << "]" << endl;
