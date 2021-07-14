@@ -34,7 +34,7 @@ myfile.removeSection("newSection");
 **INI file management**
 * Open for reading (no live updates, file loaded in memory)
 * Buffered changes
-* Changes can be written at any time or automaticaly when object gets destroyed
+* Changes can be written at any time or automatically when the object gets destroyed
 
 **Sections**
 * Global section support
