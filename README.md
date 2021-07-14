@@ -3,8 +3,8 @@ C++ library to work with INI files
 
 
 # Usage
-This is a small concept of what should be possible to do
-with this library when the project will be completed:
+This is a small concept of what is possible to do
+with this library:
 ```c++
 #include <INIParser>
 
