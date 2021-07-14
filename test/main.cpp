@@ -23,5 +23,7 @@ int main() {
         }
     }
 
+    myfile.addSection("NEW SECTION 123");
+
     return 0;
 }

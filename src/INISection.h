@@ -32,16 +32,28 @@ public:
     }
 
 
-    bool isGlobal() {
+    bool isGlobal() const {
         return global;
     }
 
-    void addValue();
-    void removeValue();
+
+    bool hasChanged() const {
+        return has_changed;
+    }
+
+
+    bool operator==(const string name) const {
+        return name == getName();
+    }
+
+    bool addKey(const pair<string, string> &to_ins);
+    bool delKey(const string name);
 
 private:
-    const string name;
-    const bool global;
+
+    string name;
+    bool global;
+    bool has_changed = false;
     vector<INIProp> keys;
 };
 

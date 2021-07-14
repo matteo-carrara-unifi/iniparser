@@ -17,8 +17,8 @@ using namespace std;
 
 class INIFile {
 public:
-    INIFile(const string filename);
-    ~INIFile();
+    INIFile(const string _filename);
+    ~INIFile(); // FIXME write buffer
 
     const vector<INISection>& getSections() const {
         return sections;
@@ -28,13 +28,16 @@ public:
         return is_open;
     }
 
-    void addSection();
-    void removeSection();
+    bool addSection(const string name);
+    bool removeSection(const string name);
+    bool hasChanged();
+    bool writeChanges();
 
 private:
     vector<INISection> sections;
     bool is_open = false;
-    fstream fs;
+    bool has_changed = false;
+    string filename;
 };
 
 

@@ -23,7 +23,9 @@ inline void trim(std::string &s) {
 }
 
 
-INIFile::INIFile(const string filename) {
+INIFile::INIFile(const string _filename) {
+    this->filename = _filename;
+    fstream fs;
     fs.open(filename);
     if(fs.is_open()) {
         this->is_open = true;
@@ -73,19 +75,68 @@ INIFile::INIFile(const string filename) {
         // this handles the keys of the last section
         sections.emplace_back(section_name, tmpkeys, !inside_section);
     }
-}
-
-
-void INIFile::addSection() {
-
-}
-
-
-void INIFile::removeSection() {
-
+    fs.close();
 }
 
 
 INIFile::~INIFile() {
-    fs.close();
+    writeChanges();
+}
+
+
+bool INIFile::addSection(const string name) {
+    if(find(sections.begin(), sections.end(), name) != sections.end())
+        return false;
+
+    vector<pair<string, string>> emptyv;
+    sections.emplace_back(name, emptyv);
+    cout << "Added section" << endl;
+    return has_changed = true;
+}
+
+
+bool INIFile::removeSection(const string name) {
+    auto pos = find(sections.begin(), sections.end(), name);
+    if(pos == sections.end())
+        return false;
+
+    sections.erase(pos);
+    return has_changed = true;
+}
+
+bool INIFile::hasChanged() {
+    cout << "Has changed" << has_changed << endl;
+    if(has_changed)
+        return true;
+
+    for(auto &s: sections){
+        if(s.hasChanged())
+            return true;
+    }
+
+    return false;
+}
+
+// FIXME Write comments
+bool INIFile::writeChanges() {
+    if(!hasChanged())
+        return false;
+
+    std::ofstream ofs;
+    ofs.open(filename, std::ofstream::out | std::ofstream::trunc);
+    cout << "Opening file for write" << endl;
+    for(auto &s: sections) {
+        if(!s.isGlobal()) {
+            ofs << "[" << s.getName() << "]" << endl;
+        }
+
+        for(auto &k: s.getProp()) {
+            ofs << k.getName() << " = " << k.getValue() << endl;
+        }
+        ofs << endl;
+    }
+    ofs.close();
+    has_changed = false;
+
+    return true;
 }

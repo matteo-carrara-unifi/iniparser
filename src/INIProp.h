@@ -23,6 +23,10 @@ public:
         return desc.second;
     }
 
+    bool operator==(const string name) const {
+        return name == getName();
+    }
+
 private:
     pair<string, string> desc;
 };
