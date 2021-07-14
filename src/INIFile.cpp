@@ -84,14 +84,14 @@ INIFile::~INIFile() {
 }
 
 
-bool INIFile::addSection(const string name) {
+INISection& INIFile::addSection(const string name) {
     if(find(sections.begin(), sections.end(), name) != sections.end())
-        return false;
+        throw invalid_argument("Cannot add the section with the specified name because it already exists");
 
     vector<pair<string, string>> emptyv;
     sections.emplace_back(name, emptyv);
-    cout << "Added section" << endl;
-    return has_changed = true;
+    has_changed = true;
+    return sections.at(sections.size()-1);
 }
 
 
@@ -103,6 +103,7 @@ bool INIFile::removeSection(const string name) {
     sections.erase(pos);
     return has_changed = true;
 }
+
 
 bool INIFile::hasChanged() {
     cout << "Has changed" << has_changed << endl;
@@ -116,6 +117,7 @@ bool INIFile::hasChanged() {
 
     return false;
 }
+
 
 // FIXME Write comments
 bool INIFile::writeChanges() {

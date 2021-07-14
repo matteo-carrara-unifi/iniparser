@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <exception>
 
 #include "INISection.h"
 
@@ -28,7 +29,7 @@ public:
         return is_open;
     }
 
-    bool addSection(const string name);
+    INISection& addSection(const string name);
     bool removeSection(const string name);
     bool hasChanged();
     bool writeChanges();

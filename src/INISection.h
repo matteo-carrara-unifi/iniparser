@@ -49,6 +49,10 @@ public:
     bool addKey(const pair<string, string> &to_ins);
     bool delKey(const string name);
 
+    bool addKey(const string name, const string value) {
+        return addKey(make_pair(name, value));
+    }
+
 private:
 
     string name;

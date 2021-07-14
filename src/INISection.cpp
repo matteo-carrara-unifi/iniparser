@@ -8,6 +8,7 @@ bool INISection::addKey(const pair<string, string> &to_ins) {
         return false;
 
     keys.emplace_back(to_ins);
+    cout << "Added key" << endl;
     return has_changed = true;
 }
 

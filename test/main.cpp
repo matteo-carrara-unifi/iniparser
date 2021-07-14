@@ -23,7 +23,8 @@ int main() {
         }
     }
 
-    myfile.addSection("NEW SECTION 123");
+    INISection &s = myfile.addSection("NEW SECTION 123");
+    s.addKey("random key", "lulz value");
 
     return 0;
 }
