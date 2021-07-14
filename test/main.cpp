@@ -23,8 +23,9 @@ int main() {
         }
     }
 
-    INISection &s = myfile.addSection("NEW SECTION 123");
-    s.addKey("random key", "lulz value");
+    myfile.addSection("NEW SECTION 123").addKey("random key", "lulz value");
+    myfile["database"].addKey("New database key", "New database data");
+
 
     return 0;
 }

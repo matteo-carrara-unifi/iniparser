@@ -142,3 +142,11 @@ bool INIFile::writeChanges() {
 
     return true;
 }
+
+INISection &INIFile::getSection(const string sec_name) {
+    auto pos = find(sections.begin(), sections.end(), sec_name);
+    if(pos == sections.end())
+        throw invalid_argument("Section with the specified name does not exists!");
+
+    return sections.at(distance(sections.begin(),pos));
+}

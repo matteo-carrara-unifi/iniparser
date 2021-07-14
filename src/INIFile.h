@@ -30,9 +30,14 @@ public:
     }
 
     INISection& addSection(const string name);
+    INISection& getSection(const string sec_name);
     bool removeSection(const string name);
     bool hasChanged();
     bool writeChanges();
+
+    INISection &operator[](const string sec_name) {
+        return getSection(sec_name);
+    }
 
 private:
     vector<INISection> sections;
