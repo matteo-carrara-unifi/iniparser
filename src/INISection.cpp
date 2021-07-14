@@ -1,17 +1,12 @@
-//
-// Created by Matteo Carrara on 29/06/21.
-//
-
-#include <iostream>
+/* Copyright 2021 Matteo Carrara <matteo.carrara@stud.unifi.it> */
 
 #include "INISection.h"
-
-using namespace std;
 
 
 void INISection::addValue() {
 
 }
+
 
 void INISection::removeValue() {
 

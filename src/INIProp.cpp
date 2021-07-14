@@ -1,6 +1,3 @@
-//
-// Created by Matteo Carrara on 29/06/21.
-//
+/* Copyright 2021 Matteo Carrara <matteo.carrara@stud.unifi.it> */
 
 #include "INIProp.h"
-

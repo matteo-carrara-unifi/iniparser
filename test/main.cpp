@@ -17,9 +17,9 @@ int main() {
         cout << "File read correctly\n";
 
     for(auto &s: myfile.getSections()) {
-        cout << "Section name is " << s->getName() << endl;
-        for(auto &p: s->getProp()) {
-            cout << "Property name: " << p->getName() << endl << "Property value: " << p->getValue() << endl << endl;
+        cout << "Section name is " << s.getName() << endl;
+        for(auto &p: s.getProp()) {
+            cout << "Property name: " << p.getName() << endl << "Property value: " << p.getValue() << endl << endl;
         }
     }
 

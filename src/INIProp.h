@@ -1,30 +1,30 @@
-//
-// Created by Matteo Carrara on 29/06/21.
-//
+/* Copyright 2021 Matteo Carrara <matteo.carrara@stud.unifi.it> */
 
 #ifndef INIPARSER_INIPROP_H
 #define INIPARSER_INIPROP_H
 
-#include "INIWriter.h"
+#include <utility>
+#include <string>
+
+using namespace std;
 
 
 class INIProp {
 public:
-    INIProp(INIWriter *_w, raw_key *_k): w(_w), k(_k) {
+    INIProp(const pair<string, string> &_desc): desc(_desc) {
 
     }
 
     const string getName() const {
-        return k->first;
+        return desc.first;
     }
 
-    const string getValue() const{
-        return k->second;
+    const string getValue() const {
+        return desc.second;
     }
 
 private:
-    INIWriter *w;
-    raw_key *k;
+    pair<string, string> desc;
 };
 
 
