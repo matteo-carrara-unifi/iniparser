@@ -34,7 +34,8 @@ INIFile::INIFile(const string _filename) {
         int linecnt = 0;
         string section_name = "";
         bool inside_section = false;
-        vector<pair<string, string>> tmpkeys;
+        vector<pair<vector<string>, pair<string, string>>> tmpkeys;
+        vector<string> comments;
 
         while (getline(fs, line)) {
             linecnt++;
@@ -45,13 +46,15 @@ INIFile::INIFile(const string _filename) {
 
             switch (line[0]) {
                 case ';':
+                    comments.push_back(line);
                     break;
 
                 case '[':
                     // In order to be a valid section, the ']' symbol should be
                     // at the end of the line
                     if (line.find(']') == (line.length() - 1)) {
-                        sections.emplace_back(section_name, tmpkeys, !inside_section);
+                        sections.emplace_back(section_name, tmpkeys, comments, !inside_section);
+                        comments.clear();
                         tmpkeys.clear();
                         inside_section = true;
                         section_name = line.substr(1, line.length() - 2);
@@ -68,12 +71,13 @@ INIFile::INIFile(const string _filename) {
                     string value = line.substr(eq + 1, string::npos);
                     trim(key);
                     trim(value);
-                    tmpkeys.emplace_back(key, value);
+                    tmpkeys.emplace_back(comments, make_pair(key, value));
+                    comments.clear();
             }
         }
 
         // this handles the keys of the last section
-        sections.emplace_back(section_name, tmpkeys, !inside_section);
+        sections.emplace_back(section_name, tmpkeys, comments, !inside_section);
     }
     fs.close();
 }
@@ -88,8 +92,9 @@ INISection& INIFile::addSection(const string name) {
     if(find(sections.begin(), sections.end(), name) != sections.end())
         throw invalid_argument("Cannot add the section with the specified name because it already exists");
 
-    vector<pair<string, string>> emptyv;
-    sections.emplace_back(name, emptyv);
+    vector<pair<vector<string>, pair<string, string>>> no_keys;
+    vector<string> no_com;
+    sections.emplace_back(name, no_keys, no_com);
     has_changed = true;
     return sections.at(sections.size()-1);
 }
@@ -126,11 +131,15 @@ bool INIFile::writeChanges() {
     std::ofstream ofs;
     ofs.open(filename, std::ofstream::out | std::ofstream::trunc);
     for(auto &s: sections) {
+        for(auto &comment: s.getComments())
+            ofs << comment << endl;
         if(!s.isGlobal()) {
             ofs << "[" << s.getName() << "]" << endl;
         }
 
         for(auto &k: s.getProp()) {
+            for(auto &comment: k.getComments())
+                ofs << comment << endl;
             ofs << k.getName() << " = " << k.getValue() << endl;
         }
         ofs << endl;

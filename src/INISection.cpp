@@ -7,7 +7,8 @@ bool INISection::addKey(const pair<string, string> &to_ins) {
     if(find(keys.begin(), keys.end(), to_ins.first) != keys.end())
         return false;
 
-    keys.emplace_back(to_ins);
+    vector<string> empty;
+    keys.emplace_back(to_ins, empty);
     return has_changed = true;
 }
 

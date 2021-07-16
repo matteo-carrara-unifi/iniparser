@@ -43,7 +43,7 @@ TEST_F(INIFileSuite, TestGetSection) {
 
 TEST_F(INIFileSuite, TestWrite) {
     const string name = "NEW SECTION 123";
-    auto s1 = myfile.addSection(name);
+    auto &s1 = myfile.addSection(name);
 
     EXPECT_NO_THROW({
         myfile[name];
@@ -57,6 +57,7 @@ TEST_F(INIFileSuite, TestWrite) {
             break;
         }
     }
+
     ASSERT_TRUE(keyfound);
 
     EXPECT_NO_THROW({

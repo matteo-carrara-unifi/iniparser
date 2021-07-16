@@ -11,7 +11,7 @@ using namespace std;
 
 class INIProp {
 public:
-    INIProp(const pair<string, string> &_desc): desc(_desc) {
+    INIProp(const pair<string, string> &_desc, const vector<string> &_comments_before): desc(_desc), comments_before(_comments_before) {
 
     }
 
@@ -27,8 +27,13 @@ public:
         return name == getName();
     }
 
+    const vector<string> &getComments() const {
+        return comments_before;
+    }
+
 private:
     pair<string, string> desc;
+    vector<string> comments_before;
 };
 
 

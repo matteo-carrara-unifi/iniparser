@@ -14,19 +14,23 @@ using namespace std;
 
 class INISection {
 public:
-    INISection(const string _name, const vector<pair<string, string>> &raw_keys, bool is_global = false): name(_name), global(is_global) {
+    INISection(const string _name, const vector<pair<vector<string>, pair<string, string>>> &raw_keys, const vector<string> &_comments_before, bool is_global = false): name(_name), global(is_global) {
+        this->comments_before = _comments_before;
         for(auto &k: raw_keys) {
-            keys.emplace_back(k);
+            keys.emplace_back(k.second, k.first);
         }
     }
 
+    const vector<string> &getComments() {
+        return comments_before;
+    }
 
     const string getName() const {
         return name;
     }
 
 
-    const vector<INIProp> &getProp() const {
+    const vector<INIProp> &getProp() {
         return keys;
     }
 
@@ -58,6 +62,7 @@ private:
     bool global;
     bool has_changed = false;
     vector<INIProp> keys;
+    vector<string> comments_before;
 };
 
 
