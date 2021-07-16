@@ -1,13 +1,10 @@
 # iniparser
 C++ library to work with INI files
 
-# Project status
-At this moment, high-level interface for reading INI files has been implemented 
-but writing has not. Unit testing also needs to be added.
 
 # Usage
-This is a small concept of what should be possible to do
-with this library when the project will be completed:
+This is a small concept of what is possible to do
+with this library:
 ```c++
 #include <INIParser>
 
@@ -16,36 +13,31 @@ INIParser myfile("config.ini");
 if(!myfile.isOpen())
     return 1;
 
-for(auto &section: myfile)
+for(auto &section: myfile.getSections())
     cout << section.getName() << endl;
 
 auto mySection = myfile["mySection"];
-for(auto &property: mySection) {
+for(auto &property: mySection.getProp()) {
     cout << property.getName() << "," << property.getValue() << endl;
     
 }
 
-myfile["newSection"] = {{"IP", "192.168.1.2"}, {"Name", "laptop"}};
-myfile["emptySection"] = {};
-myfile["uglySection"].delSection();
+myfile.addSection("newSection").addKey("IP", "192.168.1.2");
+myfile["section"].getProp()[0].getName(); // IP
+myfile.removeSection("newSection");
 
-myfile["section"]["property"].getValue();
-myfile["section"]["property"] = "new custom value";
-myfile["section"]["property"].delProp();
 ```
 
 # Features 
-(This is a list of wanted features, some are *still to be implemented*)
+
 
 **INI file management**
 * Open for reading (no live updates, file loaded in memory)
-* File lock
-* Writes in-place at every change
-* No commit is required
-* Retains original formatting
+* Buffered changes
+* Changes can be written at any time or automatically when the object gets destroyed
 
 **Sections**
-* Global section is not supported
+* Global section support
 * Get a list of all sections
 * Delete a section
 * Add a new section
