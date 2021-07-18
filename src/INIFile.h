@@ -18,8 +18,8 @@ using namespace std;
 
 class INIFile {
 public:
-    INIFile(const string _filename);
-    ~INIFile(); // FIXME write buffer
+    INIFile(const string &fname);
+    ~INIFile();
 
     const vector<INISection>& getSections() const {
         return sections;
@@ -29,20 +29,32 @@ public:
         return is_open;
     }
 
-    INISection& addSection(const string name);
-    INISection& getSection(const string sec_name);
-    bool removeSection(const string name);
-    bool hasChanged();
+    INISection& addSection(const string &name);
+
+    // Section names are unique
+    INISection& getSection(const string &sec_name) const;
+
+    bool removeSection(const string &name);
+
+    bool hasChanged() const;
+
     bool writeChanges();
 
-    INISection &operator[](const string sec_name) {
+    INISection& operator[](const string &sec_name) {
         return getSection(sec_name);
     }
 
 private:
+    void syntaxError() {
+        syntax_error = true;
+        write_enabled = false;
+    }
+
     vector<INISection> sections;
-    bool is_open = false;
+    bool is_open = false; // FIXME Never checked
     bool has_changed = false;
+    bool syntax_error = false; // TODO Implement
+    bool write_enabled = true;
     string filename;
 };
 

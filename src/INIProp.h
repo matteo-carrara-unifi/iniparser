@@ -8,6 +8,9 @@
 
 using namespace std;
 
+typedef pair<string, string> raw_key;
+typedef vector<string> raw_comm;
+
 
 class INIProp {
 public:
@@ -23,7 +26,7 @@ public:
         return desc.second;
     }
 
-    bool operator==(const string name) const {
+    bool operator==(const string &name) const {
         return name == getName();
     }
 

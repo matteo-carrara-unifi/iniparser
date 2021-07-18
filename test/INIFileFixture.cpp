@@ -6,14 +6,16 @@
 #include <string>
 
 #include "gtest/gtest.h"
+
 #include "../src/INIFile.h"
 
-
+// TODO espandere unit testing
 class INIFileSuite : public ::testing::Test {
 
 protected:
     virtual void SetUp() override {
         try {
+            // FIXME Cambiare percorse
             std::filesystem::copy("../test/sample2.ini", "../test/sample.ini", std::filesystem::copy_options::overwrite_existing);
         } catch (std::filesystem::filesystem_error& e) {
             std::cout << e.what() << '\n';
@@ -64,3 +66,4 @@ TEST_F(INIFileSuite, TestWrite) {
         myfile["database"].addKey("New database key", "New database data");
     });
 }
+// TODO Test errori

@@ -13,7 +13,7 @@ bool INISection::addKey(const pair<string, string> &to_ins) {
 }
 
 
-bool INISection::delKey(const string name) {
+bool INISection::delKey(const string &name) {
     auto pos = find(keys.begin(), keys.end(), name);
 
     if(pos == keys.end()) {
