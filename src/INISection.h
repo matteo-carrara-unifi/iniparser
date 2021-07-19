@@ -14,6 +14,7 @@ using namespace std;
 
 class INISection {
 public:
+    // tested
     INISection(const string &_name, const vector<pair<vector<string>, pair<string, string>>> &raw_keys, const vector<string> &_comments_before, bool is_global = false): name(_name), global(is_global) {
         this->comments_before = _comments_before;
         for(auto &k: raw_keys) {
@@ -21,10 +22,12 @@ public:
         }
     }
 
+
     const vector<string> &getComments() {
         return comments_before;
     }
 
+    // tested
     const string getName() const {
         return name;
     }
@@ -34,16 +37,17 @@ public:
         return keys;
     }
 
-
+    // tested
     bool isGlobal() const {
         return global;
     }
 
-
+    // tested
     bool hasChanged() const {
         return has_changed;
     }
 
+    // tested
     INIProp &operator[](const string &prop) {
         auto pos = find(keys.begin(), keys.end(), prop);
         if(pos == keys.end())
@@ -52,13 +56,18 @@ public:
         return const_cast<INIProp &>(keys.at(distance(keys.begin(), pos)));
     }
 
+    // tested
     bool operator==(const string &name) const {
         return name == getName();
     }
 
+    // tested
     bool addKey(const pair<string, string> &to_ins);
+
+    // tested
     bool delKey(const string &name);
 
+    // tested
     bool addKey(const string &name, const string &value) {
         return addKey(make_pair(name, value));
     }

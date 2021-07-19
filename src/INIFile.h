@@ -18,28 +18,37 @@ using namespace std;
 
 class INIFile {
 public:
+    // tested
     INIFile(const string &fname);
     ~INIFile();
 
+    // tested
     const vector<INISection>& getSections() const {
         return sections;
     }
 
+    // tested
     bool isOpen() const {
         return is_open;
     }
 
+    // tested
     INISection& addSection(const string &name);
 
+    // tested
     // Section names are unique
     INISection& getSection(const string &sec_name) const;
 
+    // tested
     bool removeSection(const string &name);
 
+    // tested
     bool hasChanged() const;
 
+    // tested (destructor)
     bool writeChanges();
 
+    // tested
     INISection& operator[](const string &sec_name) {
         return getSection(sec_name);
     }

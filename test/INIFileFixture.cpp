@@ -9,14 +9,12 @@
 
 #include "../src/INIFile.h"
 
-// TODO espandere unit testing
 class INIFileSuite : public ::testing::Test {
 
 protected:
     virtual void SetUp() override {
         try {
-            // FIXME Cambiare percorse
-            std::filesystem::copy("../test/sample2.ini", "../test/sample.ini", std::filesystem::copy_options::overwrite_existing);
+            std::filesystem::copy("./test/sample2.ini", "./test/sample.ini", std::filesystem::copy_options::overwrite_existing);
         } catch (std::filesystem::filesystem_error& e) {
             std::cout << e.what() << '\n';
         }
@@ -26,44 +24,61 @@ protected:
 
     }
 
-    INIFile myfile{"../test/sample.ini"};
+    const string new_sec_name = "NEW SECTION 123";
+    INIFile myfile{"./test/sample.ini"};
 };
 
 
 TEST_F(INIFileSuite, TestOpen) {
-    ASSERT_EQ(myfile.isOpen(), true);
+    ASSERT_TRUE(myfile.isOpen());
+
+    INIFile TestErr("barambani.ini");
+    ASSERT_FALSE(TestErr.isOpen());
 }
+
 
 TEST_F(INIFileSuite, TestGetSection) {
     vector<string> correctSections = {"", "database", "this is another section", "this is an empty section", "this section is not empty"};
 
     int i = 0;
+    int global_cnt = 0;
+
     for(auto &s: myfile.getSections()) {
         ASSERT_EQ(s.getName(), correctSections[i++]);
+        if(s.isGlobal())
+            global_cnt++;
     }
+
+    ASSERT_EQ(global_cnt, 1);
 }
 
-TEST_F(INIFileSuite, TestWrite) {
-    const string name = "NEW SECTION 123";
-    auto &s1 = myfile.addSection(name);
 
-    EXPECT_NO_THROW({
-        myfile[name];
-    });
+TEST_F(INIFileSuite, TestSectionHandling) {
+
+    auto &s1 = myfile.addSection(new_sec_name);
+
+    EXPECT_NO_THROW({myfile[new_sec_name];});
+    ASSERT_TRUE(myfile.hasChanged());
+
+    myfile.removeSection(new_sec_name);
+    EXPECT_THROW({myfile[new_sec_name];}, invalid_argument)
+}
+
+
+TEST_F(INIFileSuite, TestKeyHandling) {
+    INISection &s1 = myfile[new_sec_name];
+    ASSERT_FALSE(s1.isGlobal());
 
     s1.addKey("random key", "lulz value");
-    bool keyfound = false;
-    for(auto &k: s1.getProp()) {
-        if(k.getName() == "random key") {
-            keyfound = true;
-            break;
-        }
-    }
+    ASSERT_FALSE(s1.addKey("random key", "another value"));
+    ASSERT_TRUE(s1.hasChanged());
 
-    ASSERT_TRUE(keyfound);
+    EXPECT_NO_THROW(s1["random key"]);
+    EXPECT_THROW({s1["chiave non esistente"];}, invalid_argument);
 
-    EXPECT_NO_THROW({
-        myfile["database"].addKey("New database key", "New database data");
-    });
+    ASSERT_TRUE(s1.delKey("random key"));
+    ASSERT_FALSE(s1.delKey("random key"));
+
+    ASSERT_TRUE(s1 == new_sec_name);
 }
-// TODO Test errori
+

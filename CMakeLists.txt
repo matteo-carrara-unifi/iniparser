@@ -3,7 +3,7 @@ project(iniparser)
 
 set(CMAKE_CXX_STANDARD 20)
 set(gtest_SOURCE_DIR, ./lib/googletest/)
-set(TEST_SOURCE_FILES test/runAllTest.cpp test/INIFileFixture.cpp test/INIFileTest.cpp)
+set(TEST_SOURCE_FILES test/runAllTest.cpp test/INIFileFixture.cpp)
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_subdirectory(./test/lib/googletest)
