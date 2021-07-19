@@ -22,8 +22,8 @@ public:
         }
     }
 
-
-    const vector<string> &getComments() {
+    // tested
+    const vector<string> &getComments() const {
         return comments_before;
     }
 
@@ -32,7 +32,7 @@ public:
         return name;
     }
 
-
+    // tested
     const vector<INIProp> &getProp() {
         return keys;
     }

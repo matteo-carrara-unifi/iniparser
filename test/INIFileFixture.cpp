@@ -18,6 +18,7 @@ protected:
         } catch (std::filesystem::filesystem_error& e) {
             std::cout << e.what() << '\n';
         }
+        myfile.open("./test/sample.ini");
     }
 
     virtual void TearDown() override {
@@ -25,7 +26,7 @@ protected:
     }
 
     const string new_sec_name = "NEW SECTION 123";
-    INIFile myfile{"./test/sample.ini"};
+    INIFile myfile;
 };
 
 
@@ -81,5 +82,43 @@ TEST_F(INIFileSuite, TestKeyHandling) {
     ASSERT_FALSE(s1.delKey("random key"));
 
     ASSERT_TRUE(s1 == "database");
+}
+
+
+TEST_F(INIFileSuite, TestSectionComments) {
+    myfile.writeChanges();
+
+    INISection& s1 = myfile["this is another section"];
+
+    ASSERT_EQ(s1.getComments().size(), 1);
+    ASSERT_EQ(s1.getComments()[0], "; comment before a section");
+}
+
+
+TEST_F(INIFileSuite, TestSectKeys) {
+    vector<vector<string>> correct = {
+            {"server", "192.0.2.62"},
+            {"port",   "143"},
+            {"file",   "\"payroll.dat\""}
+    };
+
+    INISection &s = myfile["database"];
+    ASSERT_EQ(s.getProp().size(), correct.size());
+
+    for(int i = 0; i < correct.size(); i++) {
+        ASSERT_EQ(s.getProp()[i], correct[i][0]);
+        ASSERT_EQ(s[correct[i][0]].getValue(), correct[i][1]);
+    }
+}
+
+
+TEST_F(INIFileSuite, TestKeyClass) {
+    INISection &s = myfile["database"];
+
+    ASSERT_EQ(s["server"].getName(), "server");
+    ASSERT_EQ(s["server"].getValue(), "192.0.2.62");
+
+    ASSERT_TRUE(s["port"] == "port");
+    ASSERT_EQ(s["server"].getComments()[0], "; use IP address in case network name resolution is not working");
 }
 

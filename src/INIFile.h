@@ -20,7 +20,10 @@ class INIFile {
 public:
     // tested
     INIFile(const string &fname);
+    INIFile() {}
     ~INIFile();
+
+    void open(const string &fname);
 
     // tested
     const vector<INISection>& getSections() const {

@@ -4,10 +4,18 @@
 #include "INIProp.h"
 #include "utility.h"
 
-
 INIFile::INIFile(const string &fname) {
+    open(fname);
+}
+
+void INIFile::open(const string &fname) {
     this->filename = fname;
-    fstream fs(filename);
+
+    if(!std::filesystem::exists(fname)) {
+        return;
+    }
+
+    ifstream fs(filename);
 
     if(fs.is_open()) {
         this->is_open = true;
@@ -17,12 +25,12 @@ INIFile::INIFile(const string &fname) {
         bool inside_section = false;
         vector<pair<raw_comm, raw_key>> tmpkeys;
         vector<string> comments;
+        vector<string> sec_com;
 
         while (getline(fs, line)) {
             trim(line);
             if (line.length() == 0)
                 continue;
-
             switch (line[0]) {
                 case ';':
                     comments.push_back(line);
@@ -32,7 +40,9 @@ INIFile::INIFile(const string &fname) {
                     // In order to be a valid section, the ']' symbol should be
                     // at the end of the line
                     if (line.find(']') == (line.length() - 1)) {
-                        sections.emplace_back(section_name, tmpkeys, comments, !inside_section);
+
+                        sections.emplace_back(section_name, tmpkeys, sec_com, !inside_section);
+                        sec_com = comments;
                         comments.clear();
                         tmpkeys.clear();
                         inside_section = true;
@@ -50,7 +60,6 @@ INIFile::INIFile(const string &fname) {
                         syntaxError();
                         break; // it wasn't
                     }
-
 
                     string key = line.substr(0, eq);
                     string value = line.substr(eq + 1, string::npos);
@@ -109,8 +118,10 @@ bool INIFile::hasChanged() const {
 
 
 bool INIFile::writeChanges() {
-    if(!hasChanged())
+    if(!isOpen())
         return false;
+    //if(!hasChanged())
+        //return false;
 
     std::ofstream ofs;
     ofs.open(filename, std::ofstream::out | std::ofstream::trunc);
