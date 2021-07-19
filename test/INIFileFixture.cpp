@@ -61,17 +61,18 @@ TEST_F(INIFileSuite, TestSectionHandling) {
     ASSERT_TRUE(myfile.hasChanged());
 
     myfile.removeSection(new_sec_name);
-    EXPECT_THROW({myfile[new_sec_name];}, invalid_argument)
+    EXPECT_THROW({myfile[new_sec_name];}, invalid_argument);
 }
 
 
 TEST_F(INIFileSuite, TestKeyHandling) {
-    INISection &s1 = myfile[new_sec_name];
+    INISection &s1 = myfile["database"];
     ASSERT_FALSE(s1.isGlobal());
 
     s1.addKey("random key", "lulz value");
     ASSERT_FALSE(s1.addKey("random key", "another value"));
     ASSERT_TRUE(s1.hasChanged());
+
 
     EXPECT_NO_THROW(s1["random key"]);
     EXPECT_THROW({s1["chiave non esistente"];}, invalid_argument);
@@ -79,6 +80,6 @@ TEST_F(INIFileSuite, TestKeyHandling) {
     ASSERT_TRUE(s1.delKey("random key"));
     ASSERT_FALSE(s1.delKey("random key"));
 
-    ASSERT_TRUE(s1 == new_sec_name);
+    ASSERT_TRUE(s1 == "database");
 }
 
